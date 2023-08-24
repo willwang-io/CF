@@ -20,7 +20,7 @@
 #include <ctime>
 #include <cmath>
 #include <cstdio>
-#include <cstdlib>
+#include <cstdlibf>
 #include <cassert>
 
 using namespace std;
@@ -66,26 +66,9 @@ void no() {cout << "NO\n";}
 #define dbg(v) cout << "Line(" << __LINE__ << ") -> " << #v << " = " << (v) << endl;
 
 void solve() {
-    int n;
-    cin >> n;
-    VI A(n);
-    EACH(a, A) {
-        cin >> a;
-    }
-    if (n < 2) {
-        cout << -1 << '\n';
-        return;
-    }
-    int ans = INF, i = 0, j = 0;
-    map<int, int> cnt;
-    while (i < n && j < n) {
-        if (cnt.find(A[j]) != cnt.end()) {
-            ans = min(ans, j - cnt[A[j]] + 1);
-        }
-        cnt[A[j]] = j;
-        ++j;
-    }
-    cout << (ans == INF ? -1 : ans) << '\n';
+    int a, b, ans = 0;
+    cin >> a >> b;
+    cout << min(a, min(b, (a + b) / 3)) << '\n';
 }
 
 int main() {

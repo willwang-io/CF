@@ -72,21 +72,13 @@ void solve() {
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int t, n, m, p, q, x, y, k;
+    int t, n, m, p, q, x, y, k, a, b;
     cin >> n;
-    VI A(n);
-    EACH(a, A) {
-        cin >> a;
+    int ans = 0, tmp = 0;
+    while (n--) {
+        cin >> a >> b;
+        ans = ans - a + b;
+        tmp = max(tmp, ans);
     }
-    sort(all(A));
-    int ans = 0, i = 0, j = 0;
-    while (i < n && j < n) {
-        if (A[j] - A[i] <= 5) {
-            ++j;
-        } else {
-            ans = max(ans, j - i);
-            ++i;
-        }
-    }
-    cout << max(ans, j - i) << '\n';
+    cout << tmp << '\n';
 }

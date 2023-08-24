@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <cstring>
 #include <vector>
 #include <algorithm>
 #include <sstream>
@@ -11,17 +10,16 @@
 #include <list>
 #include <stack>
 #include <map>
-#include <unordered_map>
 #include <set>
 #include <functional>
 #include <numeric>
 #include <utility>
 #include <limits>
-#include <ctime>
-#include <cmath>
-#include <cstdio>
-#include <cstdlib>
-#include <cassert>
+#include <time.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
 
 using namespace std;
 
@@ -35,17 +33,13 @@ using namespace std;
 
 #define pb push_back
 #define sz size
-#define f first
-#define s second
 
 typedef long long int ll;
 typedef pair<int, int> PII;
 typedef vector<int> VI;
-typedef vector<ll> VL;
 typedef vector<string> VS;
 typedef vector<PII> VII;
 typedef vector<VI> VVI; 
-typedef vector<VL> VVL;
 typedef vector<VS> VVS;
 
 const int MAX_N = 1e5 + 1;
@@ -72,21 +66,28 @@ void solve() {
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int t, n, m, p, q, x, y, k;
+    int n;
     cin >> n;
-    VI A(n);
+    VI A(n * 2);
     EACH(a, A) {
         cin >> a;
     }
     sort(all(A));
-    int ans = 0, i = 0, j = 0;
-    while (i < n && j < n) {
-        if (A[j] - A[i] <= 5) {
-            ++j;
-        } else {
-            ans = max(ans, j - i);
-            ++i;
+    int ans = INF;
+    FOR(i, 0, 2 * n, 1) {
+        FOR(j, i + 1, 2 * n, 1) {
+            VI tmp;
+            REP(k, 2 * n) {
+                if (k != i && k != j) {
+                    tmp.push_back(A[k]);
+                }
+            }
+            int cur = 0;
+            FOR(k, 0, 2 * n - 2, 2) {
+                cur += (tmp[k + 1] - tmp[k]);
+            }
+            ans = min(ans, cur);
         }
     }
-    cout << max(ans, j - i) << '\n';
+    cout << ans << '\n';
 }

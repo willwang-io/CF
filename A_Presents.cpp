@@ -74,19 +74,11 @@ int main() {
     cin.tie(nullptr);
     int t, n, m, p, q, x, y, k;
     cin >> n;
-    VI A(n);
-    EACH(a, A) {
-        cin >> a;
+    VI ans(n);
+    REP(i, n) {
+        cin >> x;
+        ans[x - 1] = i + 1;
     }
-    sort(all(A));
-    int ans = 0, i = 0, j = 0;
-    while (i < n && j < n) {
-        if (A[j] - A[i] <= 5) {
-            ++j;
-        } else {
-            ans = max(ans, j - i);
-            ++i;
-        }
-    }
-    cout << max(ans, j - i) << '\n';
+    print_v(ans);
+    cout << '\n';
 }

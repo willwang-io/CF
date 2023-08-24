@@ -79,14 +79,23 @@ int main() {
         cin >> a;
     }
     sort(all(A));
-    int ans = 0, i = 0, j = 0;
-    while (i < n && j < n) {
-        if (A[j] - A[i] <= 5) {
-            ++j;
-        } else {
-            ans = max(ans, j - i);
-            ++i;
-        }
+    int j = 1;
+    while (j < n && A[j] == A[j - 1]) {
+        ++j;
     }
-    cout << max(ans, j - i) << '\n';
+    int total = j, ans = 0;
+    FOR(i, j, n, 1) {
+        j = i;
+        int cnt = 1;
+        while (j < n && A[i] == A[j]) {
+            if (cnt <= total) {
+                ++ans;
+            } else {
+                ++total;
+            }
+            ++j, ++cnt;
+        }
+        i = j - 1;
+    }
+    cout << ans << '\n';
 }

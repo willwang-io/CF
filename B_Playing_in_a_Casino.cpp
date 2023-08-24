@@ -1,6 +1,5 @@
 #include <iostream>
 #include <string>
-#include <cstring>
 #include <vector>
 #include <algorithm>
 #include <sstream>
@@ -11,22 +10,21 @@
 #include <list>
 #include <stack>
 #include <map>
-#include <unordered_map>
 #include <set>
 #include <functional>
 #include <numeric>
 #include <utility>
 #include <limits>
-#include <ctime>
-#include <cmath>
-#include <cstdio>
-#include <cstdlib>
-#include <cassert>
+#include <time.h>
+#include <math.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <assert.h>
 
 using namespace std;
 
 #define all(c) (c).begin(), (c).end()
-#define rall(c) (c).rbegin(), (c).rend();
+#define rall(c) (c).rbegin(), (c).rend()
 #define EACH(x, a) for (auto& x: a)
 #define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
 #define RFOR(i, j, k, in) for (int i=j ; i>=k ; i-=in)
@@ -35,17 +33,13 @@ using namespace std;
 
 #define pb push_back
 #define sz size
-#define f first
-#define s second
 
 typedef long long int ll;
 typedef pair<int, int> PII;
 typedef vector<int> VI;
-typedef vector<ll> VL;
 typedef vector<string> VS;
 typedef vector<PII> VII;
 typedef vector<VI> VVI; 
-typedef vector<VL> VVL;
 typedef vector<VS> VVS;
 
 const int MAX_N = 1e5 + 1;
@@ -66,27 +60,30 @@ void no() {cout << "NO\n";}
 #define dbg(v) cout << "Line(" << __LINE__ << ") -> " << #v << " = " << (v) << endl;
 
 void solve() {
-
+    ll n, m;
+    cin >> n >> m;
+    vector<vector<ll>> A(m, vector<ll>(n));
+    REP(i, n) {
+        REP(j, m) {
+            cin >> A[j][i];
+        }
+    }
+    ll ans = 0;
+    EACH(a, A) {
+        sort(rall(a));
+        REP(i, n) {
+            ans += (n - i - 1) * a[i] - a[i] * i;
+        }
+    }
+    cout << ans << '\n';
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int t, n, m, p, q, x, y, k;
-    cin >> n;
-    VI A(n);
-    EACH(a, A) {
-        cin >> a;
+    int t;
+    cin >> t;
+    while (t--) {
+        solve();
     }
-    sort(all(A));
-    int ans = 0, i = 0, j = 0;
-    while (i < n && j < n) {
-        if (A[j] - A[i] <= 5) {
-            ++j;
-        } else {
-            ans = max(ans, j - i);
-            ++i;
-        }
-    }
-    cout << max(ans, j - i) << '\n';
 }
