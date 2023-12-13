@@ -57,20 +57,17 @@ vt<vt<int>> adj;
 vt<int> seen;
 
 void solve() {
-    int n, a, b;
-    string s;
-    cin >> n >> a >> b >> s;
-    if (b >= 0) {
-        cout << (a * 1 + b) * n << nl;
-    } else {
-        int cnt = 1;
-        for (int i = 1; i < n; ++i) {
-            if (s[i] != s[i-1]) {
-                ++cnt;
-            }
-        }
-        cout << a * n + (cnt / 2 + 1) * b << nl; 
+    int n;
+    cin >> n;
+    unordered_map<string, int> cnt = {{"01", INF}, {"10", INF}, {"11", INF}};
+    REP(i, n) {
+        int m;
+        string s;
+        cin >> m >> s;
+        umin(cnt[s], m);
     }
+    ll ans = min(cnt["10"] + cnt["01"], cnt["11"]);
+    cout << (ans == INF ? -1 : ans) << nl;
 }
 
 int main() {
