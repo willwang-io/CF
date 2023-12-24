@@ -57,36 +57,19 @@ vt<vt<int>> adj;
 vt<int> seen;
 
 void solve() {
-    int n, m;
-    cin >> n;
-    vt<int> R(n);
-    EACH(r, R) cin >> r;
-    cin >> m;
-    vt<int> B(m);
-    EACH(b, B) cin >> b;
-    vt<ll> pR(n + 1), pB(m + 1);
-    for (int i = 1; i <= n; ++i) {
-        pR[i] += pR[i-1] + R[i-1];
-    }
-    for (int i = 1; i <= m; ++i) {
-        pB[i] += pB[i-1] + B[i-1];
-    }
-    ll ans = 0;
-    for (int i = 0; i <= n; ++i) {
-        for (int j = 0; j <= m; ++j) {
-            umax(ans, pR[i] + pB[j]);
-        }
-    }
-    cout << ans << nl;
+    
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int t;
-    cin >> t;
-
-    REP(i, t) {
-        solve();
+    int n;
+    string s;
+    cin >> n >> s;
+    int x = 0, y = 0;
+    EACH(c, s) {
+        if (c == '0') ++x;
+        else ++y;
     }
+    cout << n - min(x, y) * 2 << nl;
 }
