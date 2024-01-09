@@ -41,10 +41,6 @@ const int d4i[4]={-1,0,1,0}, d4j[4]={0,1,0,-1};
 const int d8i[8]={-1,-1,0,1,1,1,0,-1}, d8j[8]={0,1,1,1,0,-1,-1,-1};
 
 template <class T> void printv (const vector<T> &V) {for(auto& v:  V) cout << v << " ";cout << nl;}
-template<class T> bool umin(T& a, const T& b) {return b<a?a=b, 1:0;}
-template<class T> bool umax(T& a, const T& b) {return a<b?a=b, 1:0;}
-void yes() {cout << "YES\n";}
-void no() {cout << "NO\n";}
 
 #define dbg(v) cout << "Line(" << __LINE__ << ") -> " << #v << " = " << (v) << endl;
 
@@ -52,34 +48,42 @@ vt<vt<int>> adj;
 vt<int> seen;
 
 void solve() {
-    int n, k, q;
-    cin >> n >> k >> q;
-    vt<ll> A(n);
-    for (auto &a: A) {
-        cin >> a;
-    }
-    ll ans = 0;
-    for (int i = 0; i < n; ++i) {
-        ll cnt = 0, j = i;
-        while (j < n && A[j] <= q) {
-            ++j;
-            ++cnt;
-        }
-        i = j;
-        if (cnt >= k) {
-            ans += (cnt - k + 1) * (cnt - k + 2) / 2;
-        }
-    }
-    cout << ans << nl;
+    
 }
+
+struct Point {
+    int x, y;
+};
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int t;
-    cin >> t;
-
-    for (int i = 0; i < t; ++i) {
-        solve();
+    int n;
+    cin >> n;
+    vt<Point> pts(n);
+    for (auto &pt: pts) {
+        cin >> pt.x >> pt.y;
     }
+    int ans = 0;
+    for (auto &p1: pts) {
+        int up = 0, down = 0, right = 0, left = 0;
+        for (auto &p2: pts) {
+            if (p1.y == p2.y && p1.x > p2.x) {
+                right = 1;
+            }
+            if (p1.y == p2.y && p1.x < p2.x) {
+                left = 1;
+            }
+            if (p1.x == p2.x && p1.y < p2.y) {
+                down = 1;
+            }
+            if (p1.x == p2.x && p1.y > p2.y) {
+                up = 1;
+            }
+        }
+        if (up + down + right + left == 4) {
+            ++ans;
+        }
+    }
+    cout << ans << nl;
 }

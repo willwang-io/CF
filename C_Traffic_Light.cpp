@@ -52,22 +52,18 @@ vt<vt<int>> adj;
 vt<int> seen;
 
 void solve() {
-    int n, k, q;
-    cin >> n >> k >> q;
-    vt<ll> A(n);
-    for (auto &a: A) {
-        cin >> a;
-    }
-    ll ans = 0;
-    for (int i = 0; i < n; ++i) {
-        ll cnt = 0, j = i;
-        while (j < n && A[j] <= q) {
-            ++j;
-            ++cnt;
+    int n;
+    char c;
+    string s;
+    cin >> n >> c >> s;
+    s += s;
+    ll ans = 0, pos = -1;
+    for (int i = s.size() - 1; i >= 0; --i) {
+        if (s[i] == 'g') {
+            pos = i;
         }
-        i = j;
-        if (cnt >= k) {
-            ans += (cnt - k + 1) * (cnt - k + 2) / 2;
+        if (s[i] == c && pos != -1) {
+            ans = max(ans, pos - i);
         }
     }
     cout << ans << nl;

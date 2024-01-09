@@ -41,10 +41,6 @@ const int d4i[4]={-1,0,1,0}, d4j[4]={0,1,0,-1};
 const int d8i[8]={-1,-1,0,1,1,1,0,-1}, d8j[8]={0,1,1,1,0,-1,-1,-1};
 
 template <class T> void printv (const vector<T> &V) {for(auto& v:  V) cout << v << " ";cout << nl;}
-template<class T> bool umin(T& a, const T& b) {return b<a?a=b, 1:0;}
-template<class T> bool umax(T& a, const T& b) {return a<b?a=b, 1:0;}
-void yes() {cout << "YES\n";}
-void no() {cout << "NO\n";}
 
 #define dbg(v) cout << "Line(" << __LINE__ << ") -> " << #v << " = " << (v) << endl;
 
@@ -52,25 +48,47 @@ vt<vt<int>> adj;
 vt<int> seen;
 
 void solve() {
-    int n, k, q;
-    cin >> n >> k >> q;
-    vt<ll> A(n);
-    for (auto &a: A) {
-        cin >> a;
-    }
-    ll ans = 0;
+    int n;
+    cin >> n;
+    int arr[n][n-1];
     for (int i = 0; i < n; ++i) {
-        ll cnt = 0, j = i;
-        while (j < n && A[j] <= q) {
-            ++j;
-            ++cnt;
-        }
-        i = j;
-        if (cnt >= k) {
-            ans += (cnt - k + 1) * (cnt - k + 2) / 2;
+        for (int j = 0; j < n - 1; ++j) {
+            cin >> arr[i][j];
         }
     }
-    cout << ans << nl;
+    int ans[n + 1], prev = -1;
+    for (int j = 0; j < n - 1; ++j) {
+        int x = -1, y = -1, cnt_x = 0, cnt_y = 0;
+        for (int i = 0; i < n; ++i) {
+            int cur = arr[i][j];
+            if (x == -1 || x == cur) {
+                x = cur;
+                ++cnt_x;
+            } else if (y == -1 || y == cur) {
+                y = cur;
+                ++cnt_y;
+            }
+        }
+        if (j == 0) {
+            if (cnt_x > cnt_y) {
+                ans[j] = x;
+                prev = y;
+            } else {
+                ans[j] = y;
+                prev = x;
+            }
+        } else {
+            ans[j] = prev;
+            if (x != prev) prev = x;
+            else prev = y;
+        }
+    }
+    ans[n - 1] = prev;
+    for (int i = 0; i < n; ++i) {
+        cout << ans[i] << ' ';
+    }
+    cout << nl;
+
 }
 
 int main() {

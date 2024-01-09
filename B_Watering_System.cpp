@@ -41,10 +41,6 @@ const int d4i[4]={-1,0,1,0}, d4j[4]={0,1,0,-1};
 const int d8i[8]={-1,-1,0,1,1,1,0,-1}, d8j[8]={0,1,1,1,0,-1,-1,-1};
 
 template <class T> void printv (const vector<T> &V) {for(auto& v:  V) cout << v << " ";cout << nl;}
-template<class T> bool umin(T& a, const T& b) {return b<a?a=b, 1:0;}
-template<class T> bool umax(T& a, const T& b) {return a<b?a=b, 1:0;}
-void yes() {cout << "YES\n";}
-void no() {cout << "NO\n";}
 
 #define dbg(v) cout << "Line(" << __LINE__ << ") -> " << #v << " = " << (v) << endl;
 
@@ -52,34 +48,34 @@ vt<vt<int>> adj;
 vt<int> seen;
 
 void solve() {
-    int n, k, q;
-    cin >> n >> k >> q;
-    vt<ll> A(n);
-    for (auto &a: A) {
-        cin >> a;
-    }
-    ll ans = 0;
-    for (int i = 0; i < n; ++i) {
-        ll cnt = 0, j = i;
-        while (j < n && A[j] <= q) {
-            ++j;
-            ++cnt;
-        }
-        i = j;
-        if (cnt >= k) {
-            ans += (cnt - k + 1) * (cnt - k + 2) / 2;
-        }
-    }
-    cout << ans << nl;
+    
 }
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    int t;
-    cin >> t;
-
-    for (int i = 0; i < t; ++i) {
-        solve();
+    int n, A, B;
+    cin >> n >> A >> B;
+    int arr[n];
+    ll total = 0;
+    for (int i = 0; i < n; ++i) {
+        cin >> arr[i];
+        total += arr[i];
     }
+    sort(arr + 1, arr + n);
+    ll x = arr[0] * A, ans = 0;
+
+    if (x / static_cast<double>(total) >= B) {
+        cout << 0 << nl;
+        return 0;
+    }
+    for (int i = n - 1; i >= 1; --i) {
+        total -= arr[i];
+        double cur = x / static_cast<double>(total);
+        if (cur >= B) {
+            break;
+        }
+        ++ans;
+    }
+    cout << ans + 1 << nl;
 }

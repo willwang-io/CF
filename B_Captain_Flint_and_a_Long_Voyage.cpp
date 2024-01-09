@@ -41,10 +41,6 @@ const int d4i[4]={-1,0,1,0}, d4j[4]={0,1,0,-1};
 const int d8i[8]={-1,-1,0,1,1,1,0,-1}, d8j[8]={0,1,1,1,0,-1,-1,-1};
 
 template <class T> void printv (const vector<T> &V) {for(auto& v:  V) cout << v << " ";cout << nl;}
-template<class T> bool umin(T& a, const T& b) {return b<a?a=b, 1:0;}
-template<class T> bool umax(T& a, const T& b) {return a<b?a=b, 1:0;}
-void yes() {cout << "YES\n";}
-void no() {cout << "NO\n";}
 
 #define dbg(v) cout << "Line(" << __LINE__ << ") -> " << #v << " = " << (v) << endl;
 
@@ -52,25 +48,12 @@ vt<vt<int>> adj;
 vt<int> seen;
 
 void solve() {
-    int n, k, q;
-    cin >> n >> k >> q;
-    vt<ll> A(n);
-    for (auto &a: A) {
-        cin >> a;
-    }
-    ll ans = 0;
-    for (int i = 0; i < n; ++i) {
-        ll cnt = 0, j = i;
-        while (j < n && A[j] <= q) {
-            ++j;
-            ++cnt;
-        }
-        i = j;
-        if (cnt >= k) {
-            ans += (cnt - k + 1) * (cnt - k + 2) / 2;
-        }
-    }
-    cout << ans << nl;
+    int n;
+    cin >> n;
+    int cnt = ceil(n / 4.0);
+    for (int i = 0; i < n - cnt; ++i) cout << '9';
+    for (int i = 0; i < cnt; ++i) cout << '8';
+    cout << nl;
 }
 
 int main() {
@@ -83,3 +66,11 @@ int main() {
         solve();
     }
 }
+// 3->998
+// 4->9998
+// 5->99988
+// 6->999988
+// 7->9999988
+// 8->99999988
+
+// 1001 1001 1001 1001 1001 1001 1000 1000
