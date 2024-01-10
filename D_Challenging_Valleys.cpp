@@ -1,0 +1,80 @@
+#include <iostream>
+#include <string>
+#include <cstring>
+#include <vector>
+#include <algorithm>
+#include <sstream>
+#include <queue>
+#include <deque>
+#include <bitset>
+#include <iterator>
+#include <list>
+#include <stack>
+#include <map>
+#include <unordered_map>
+#include <set>
+#include <functional>
+#include <numeric>
+#include <utility>
+#include <limits>
+#include <ctime>
+#include <cmath>
+#include <cstdio>
+#include <cstdlib>
+#include <cassert>
+
+using namespace std;
+
+#define all(c) (c).begin(), (c).end()
+#define rall(c) (c).rbegin(), (c).rend()
+
+#define nl '\n'
+#define vt vector
+typedef long long int ll;
+
+const int MAX_N = 1e5 + 1;
+const int MOD = 1e9 + 7;
+const int INF = 1e9;
+const ll LINF = 1e18;
+
+const int d4i[4]={-1,0,1,0}, d4j[4]={0,1,0,-1};
+const int d8i[8]={-1,-1,0,1,1,1,0,-1}, d8j[8]={0,1,1,1,0,-1,-1,-1};
+
+template <class T> void printv (const vector<T> &V) {for(auto& v:  V) cout << v << " ";cout << nl;}
+
+#define dbg(v) cout << "Line(" << __LINE__ << ") -> " << #v << " = " << (v) << endl;
+
+vt<vt<int>> adj;
+vt<int> seen;
+
+void solve() {
+    int n;
+    cin >> n;
+    vt<ll> A(n + 2, LINF);
+    for (int i = 1; i <= n; ++i) {
+        cin >> A[i];
+    }
+    int cnt = 0;
+    for (int i = 1; i <= n; ++i) {
+        int j = i;
+        while (j <= n && A[j] == A[i]) {
+            ++j;
+        }
+        if (A[i] < A[i-1] && A[j] > A[j-1]) {
+            ++cnt;
+        }
+        i = j - 1;
+    }
+    cout << (cnt == 1 ? "YES" : "NO") << nl;
+}
+
+int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(nullptr);
+    int t;
+    cin >> t;
+
+    for (int i = 0; i < t; ++i) {
+        solve();
+    }
+}
