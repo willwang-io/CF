@@ -27,6 +27,11 @@ using namespace std;
 
 #define all(c) (c).begin(), (c).end()
 #define rall(c) (c).rbegin(), (c).rend()
+#define EACH(x, a) for (auto& x: a)
+#define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
+#define RFOR(i, j, k, in) for (int i=j ; i>=k ; i-=in)
+#define REP(i, j) FOR(i, 0, j, 1)
+#define RREP(i, j) RFOR(i, j, 0, 1)
 
 #define nl '\n'
 #define vt vector
@@ -48,25 +53,32 @@ vt<vt<int>> adj;
 vt<int> seen;
 
 void solve() {
-    
+    int n;
+    cin >> n;
+    vt<int> a(n);
+    REP(i, n) cin >> a[i];
+    string s;
+    cin >> s;
+    vt<vt<int>> v;
+    for (int i = 0; i < n; ++i) {
+        v.push_back({(s[i] - '0'), a[i], i});
+    }
+    sort(all(v));
+    vt<int> ans(n);
+    REP(i, n) {
+        cout << v[i][0] << " " << v[i][1] << " " << v[i][2] << nl;
+        ans[v[i][2]] = i + 1;
+    }
+    printv(ans);
 }
-
 
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(nullptr);
-    string s;
-    cin >> s;
-    int i = 0, j = s.size() - 1, cnt = 0;
-    while (i < j) {
-        if (s[i] != s[j]) {
-            ++cnt;
-        }
-        ++i, --j;
-    }
-    if (!cnt)
-        cout << (s.size() % 2 == 1 ? "YES" : "NO") << nl;
-    else {
-        cout << (cnt == 1 ? "YES" : "NO") << nl;
+    int t;
+    cin >> t;
+
+    for (int i = 0; i < t; ++i) {
+        solve();
     }
 }
