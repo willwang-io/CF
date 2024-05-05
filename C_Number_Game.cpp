@@ -64,7 +64,6 @@ void solve() {
     } else {
         std::cout << A;
     }
-    
 }
 
 int main() {
