@@ -34,6 +34,7 @@ void solve() {
         std::cout << ans[i] << ' ';
     }
     std::cout << '\n';
+    
 }
 
 int main() {
