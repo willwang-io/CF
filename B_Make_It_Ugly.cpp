@@ -22,8 +22,7 @@
 typedef long long ll;
 
 void solve() {
-    int n, k;
-    std::cin >> n >> k;
+    
 }
 
 int main() {

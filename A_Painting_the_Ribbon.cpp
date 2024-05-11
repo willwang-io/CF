@@ -22,8 +22,23 @@
 typedef long long ll;
 
 void solve() {
-    int n, k;
-    std::cin >> n >> k;
+    int n, m, k;
+    std::cin >> n >> m >> k;
+    std::vector<int> pieces(n);
+    for (int i = 0; i < n; ++i) {
+        pieces[i] = i % m;
+    }
+    int mn = 1e9;
+    for (int i = 0; i < m; ++i) {
+        int cur = 0;
+        for (int j = 0; j < n; ++j) {
+            if (pieces[j] != i) {
+                ++cur;
+            }
+        }
+        mn = std::min(mn, cur);
+    }
+    std::cout << (mn > k ? "YES\n" : "NO\n");
 }
 
 int main() {
