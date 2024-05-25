@@ -26,14 +26,7 @@ void solve() {
     std::cin >> n;
     std::string a, b, c;
     std::cin >> a >> b >> c;
-    bool ok = false;
-    for (int i = 0; i < n; ++i) {
-        if (a[i] != c[i] && b[i] != c[i]) {
-            ok = true;
-        }
-    }
-    std::cout << (ok ? "YES\n" : "NO\n");
-
+    std::string s(n, '#');
 }
 
 int main() {
