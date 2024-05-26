@@ -33,6 +33,7 @@ void solve() {
         std::cout << (i % 2 == 0 ? "AA" : "BB");
     }
     std::cout << '\n';
+    
 }
 
 
