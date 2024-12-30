@@ -28,10 +28,36 @@ typedef std::pair<int, int> PII;
 #define EACH(x, a) for (auto& x: a)
 
 /*
- * @date: 2024-12-29 20:12:02
+ * @author: will_wang
+ * @created: 2024-12-29 20:28:43
  */
+
+int n, seen[2][200001];
+std::vector<std::string> a(2);
+
+bool dfs(int i, int j, int turn=0) {
+    if (i < 0 || j < 0 || i >= 2 || j >= n || seen[i][j] == 1) {
+        return false;
+    }
+    if (i == 1 && j == n - 1) {
+        return true;
+    }
+    seen[i][j] = 1;
+    if (turn == 1) {
+        if (a[i][j] == '<') {
+            return dfs(i, j - 1, turn ^ 1);
+        } else {
+            return dfs(i, j + 1, turn ^ 1);
+        }
+    }
+    return dfs(i + 1, j, turn ^ 1) || dfs(i - 1, j, turn ^ 1) || dfs(i, j + 1, turn ^ 1) || dfs(i, j - 1, turn ^ 1);
+}
+
 void solve() {
-    
+    std::cin >> n;
+    std::cin >> a[0] >> a[1];
+    std::memset(seen, 0, sizeof seen);
+    std::cout << (dfs(0, 0, 0) ? "YES\n" : "NO\n");
 }
 
 int main() {
