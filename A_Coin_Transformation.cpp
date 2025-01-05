@@ -22,7 +22,12 @@ typedef std::vector<int> VI;
 typedef std::pair<int, int> PII;
 typedef std::vector<std::string> VS;
 
-#ifdef _DEBUG
+const int INF = 1e9;
+const ll LINF = 1e18;
+const int MAX_N = 1e5 + 1;
+const int MOD = 1e9 + 7;
+
+#ifdef DEBUG
 #define dbg(...) std::cerr << __LINE__ << ": [" << #__VA_ARGS__ << "] = [", dbg_out(__VA_ARGS__)
 template<class T> void dbg_out(T &&x) { std::cerr << x << "]\n"; }
 template<class T, class...Args> void dbg_out(T &&x, Args&&...args) { std::cerr << x << ", "; dbg_out(args...); }
@@ -30,20 +35,25 @@ template<class T, class...Args> void dbg_out(T &&x, Args&&...args) { std::cerr <
 #define dbg(...) 0
 #endif
 
-#define FOR(i, j, k, in) for (int i=j ; i<k ; i+=in)
-#define REP(i, j) FOR(i, 0, j, 1)
-#define EACH(x, a) for (auto& x: a)
-#define all(c) (c).begin(), (c).end()
-
 /*
  * @author: will_wang
- * @created: 2024-12-30 12:58:08
+ * @created: 2025-01-01 12:31:59
  */
+std::unordered_map<ll, ll> memo;
+
+ll dfs(ll n) {
+    if (n <= 3) {
+        return 1;
+    }
+    if (memo.find(n) != memo.end()) {
+        return memo[n];
+    }
+    return memo[n] = dfs(n / 4) + dfs(n / 4);
+}
 void solve() {
-    std::unordered_map<int, int> mp;
-    std::cout << "whatever\n";
-    std::queue<int> q;
-    std::stack<int> stk;
+    ll n;
+    std::cin >> n;
+    std::cout << dfs(n) << '\n';
 }
 
 int main() {
@@ -52,7 +62,7 @@ int main() {
 
     int t;
     std::cin >> t;
-    while (t--) {
+    for (int i = 0; i < t; ++i) {
         solve();
     }
 }

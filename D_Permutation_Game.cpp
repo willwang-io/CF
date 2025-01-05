@@ -9,7 +9,9 @@
 #include <iterator>
 #include <stack>
 #include <map>
+#include <unordered_map>
 #include <set>
+#include <unordered_set>
 #include <functional>
 #include <numeric>
 #include <utility>
@@ -22,7 +24,7 @@ typedef std::vector<int> VI;
 typedef std::pair<int, int> PII;
 typedef std::vector<std::string> VS;
 
-#ifdef _DEBUG
+#ifdef DEBUG
 #define dbg(...) std::cerr << __LINE__ << ": [" << #__VA_ARGS__ << "] = [", dbg_out(__VA_ARGS__)
 template<class T> void dbg_out(T &&x) { std::cerr << x << "]\n"; }
 template<class T, class...Args> void dbg_out(T &&x, Args&&...args) { std::cerr << x << ", "; dbg_out(args...); }
@@ -37,13 +39,30 @@ template<class T, class...Args> void dbg_out(T &&x, Args&&...args) { std::cerr <
 
 /*
  * @author: will_wang
- * @created: 2024-12-30 12:58:08
+ * @created: 2024-12-30 13:28:04
  */
+VI p, a;
+
+ll dfs(int k, int i) {
+    if (k == 0) {
+        return 0LL;
+    }
+    ll ans = a[i - 1];
+    return ans + std::max(dfs(k - 1, i), dfs(k - 1, p[i] - 1));
+}
+
 void solve() {
-    std::unordered_map<int, int> mp;
-    std::cout << "whatever\n";
-    std::queue<int> q;
-    std::stack<int> stk;
+    int n, k, pb, ps;
+    std::cin >> n >> k >> pb >> ps;
+    p.resize(n);
+    a.resize(n);
+    EACH(i, p) {
+        std::cin >> i;
+    }
+    EACH(i, a) {
+        std::cin >> i;
+    }
+    dbg(dfs(k, pb), dfs(k, ps));
 }
 
 int main() {
@@ -52,7 +71,7 @@ int main() {
 
     int t;
     std::cin >> t;
-    while (t--) {
+    REP(i, t) {
         solve();
     }
 }
