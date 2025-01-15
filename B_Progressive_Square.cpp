@@ -26,36 +26,30 @@ template<class T, class...Args> void dbg_out(T &&x, Args&&...args) { std::cerr <
 #endif
 
 /*
- * Created: Jan 13, 2025 @ 20:34:40
+ * Created: Jan 14, 2025 @ 20:32:49
  * Author: will_wang
  */
-int check(int x, int y) {
-    if (x > y) {
-        return 1;
-    } else if (x == y) {
-        return 0;
-    } else {
-        return -1;
-    }
-}
-
 void solve() {
-    int a1, a2, b1, b2;
-    std::cin >> a1 >> a2 >> b1 >> b2;
-    int ans = 0;
-    if (check(a1, b1) + check(a2, b2) > 0) {
-        ++ans;
+    int n, c, d;
+    std::cin >> n >> c >> d;
+    std::map<int, int> cnt;
+    long long mn = 1e18;
+    for (int i = 0; i < n * n; ++i) {
+        long long x;
+        std::cin >> x;
+        ++cnt[x];
+        mn = std::min(mn, x);
     }
-    if (check(a1, b2) + check(a2, b1) > 0) {
-        ++ans;
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < n; ++j) {
+            long long cur = mn + i * c + j * d;
+            if (cnt[cur]-- <= 0) {
+                std::cout << "NO\n";
+                return;
+            }
+        }
     }
-    if (check(a2, b1) + check(a1, b2) > 0) {
-        ++ans;
-    }
-    if (check(a2, b2) + check(a1, b1) > 0) {
-        ++ans;
-    }
-    std::cout << ans << '\n';
+    std::cout << "YES\n";
 }
 
 int main() {

@@ -28,13 +28,13 @@ void solve() {
     for (int i = 0; i < n - 1; ++i) {
         std::cin >> a[i];
     }
-    std::vector<int> ans(n);
-    ans[0] = a[0] + 1;
-    for (int i = 0; i < n; ++i) {
-        std::cout << ans[i] << ' ';
+    int prev = 1000000;
+    std::cout << prev << ' ';
+    for (int i = 0; i < n - 1; ++i) {
+        prev += a[i];
+        std::cout << prev << ' ';
     }
     std::cout << '\n';
-    
 }
 
 int main() {
