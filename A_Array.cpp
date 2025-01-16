@@ -1,0 +1,75 @@
+#include <map>
+#include <set>
+#include <array>
+#include <cmath>
+#include <queue>
+#include <bitset>
+#include <chrono>
+#include <random>
+#include <ranges>
+#include <vector>
+#include <cassert>
+#include <cstdint>
+#include <cstring>
+#include <iomanip>
+#include <numeric>
+#include <iostream>
+#include <algorithm>
+#include <functional>
+
+#ifdef DEBUG
+#define dbg(...) std::cerr << __LINE__ << ": [" << #__VA_ARGS__ << "] = [", dbg_out(__VA_ARGS__)
+template<class T> void dbg_out(T &&x) { std::cerr << x << "]\n"; }
+template<class T, class...Args> void dbg_out(T &&x, Args&&...args) { std::cerr << x << ", "; dbg_out(args...); }
+#else
+#define dbg(...) 0
+#endif
+
+/*
+ * Created: Jan 14, 2025 @ 22:02:41
+ * Author: will_wang
+ */
+void solve() {
+    int n;
+    std::cin >> n;
+    std::vector<int> a(n);
+    std::vector<int> pos, neg;
+    for (auto &x: a) {
+        std::cin >> x;
+        if (x > 0) {
+            pos.push_back(x);
+        } else if (x < 0) {
+            neg.push_back(x);
+        }
+    }
+    int cnt = 1, start = 1;
+    std::cout << 1 << ' ' << neg[0] << '\n';
+    if (pos.empty()) {
+        std::cout << 2 << ' ' << neg[1] << ' ' << neg[2] << '\n';
+        cnt += 2;
+        start = 3;
+    } else {
+        std::cout << 1 << ' ' << pos[0] << '\n';
+        ++cnt;
+    }
+    std::cout << n - cnt << ' ' << 0 << ' ';
+    for (int i = 1; i < (int) pos.size(); ++i) {
+        std::cout << pos[i] << ' ';
+    }
+    for (int i = start; i < (int) neg.size(); ++i) {
+        std::cout << neg[i] << ' '; 
+    }
+    std::cout << '\n';
+}
+
+int main() {
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
+
+    int t;
+    t = 1;
+    for (int i = 0; i < t; ++i) {
+        // std::cout << "Case #" << (i + 1) << ": ";
+        solve();
+    }
+}
