@@ -26,39 +26,39 @@ template<class T, class...Args> void dbg_out(T &&x, Args&&...args) { std::cerr <
 #endif
 
 /*
- * Created: Jan 17, 2025 @ 13:02:47
+ * Created: Mar 22, 2025 @ 23:36:28
  * Author: will_wang
  */
-void solve() {
-    int n;
-    std::string s;
-    std::cin >> n >> s;
-    std::vector<int> cnt(26);
-    for (auto &c: s) {
-        ++cnt[c - 'a'];
+void solve(){
+    int n, m;
+    std::cin >> n >> m;
+    std::vector<std::string> g(n);
+    for (int i = 0; i < n; ++i) { std::cin >> g[i]; }
+    for (int i = 0; i < n; ++i) {
+        for (int j = 0; j < m; ++j) {
+            if (g[i][j] == '1') {
+                bool ok = false;
+                for (int k = 0; k < j; ++k) {
+                    if (g[i][k] == '0') {
+                        ok = true;
+                        break;
+                    }
+                }
+                bool ok2 = false;
+                for (int k = 0; k < i; ++k) {
+                    if (g[k][j] == '0') {
+                        ok2 = true;
+                        break;
+                    }
+                }
+                if (ok && ok2) {
+                    std::cout << "NO\n";
+                    return;
+                }
+            }
+        }
     }
-    int mx = *std::max_element(cnt.begin(), cnt.end());
-    int mn = 1e9;
-    char mx_c, mn_c;
-    for (int i = 0; i < 26; ++i) {
-        if (cnt[i] == 0) {
-            continue;
-        }
-        if (cnt[i] == mx) {
-            mx_c = i + 'a';
-        }
-        if (cnt[i] < mn) {
-            mn = cnt[i];
-            mn_c = i + 'a';
-        }
-    }
-    for (auto &c: s) {
-        if (c == mn_c) {
-            c = mx_c;
-            break;
-        }
-    }
-    std::cout << s << '\n';
+    std::cout << "YES\n";
 }
 
 int main() {

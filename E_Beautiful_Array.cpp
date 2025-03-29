@@ -26,39 +26,16 @@ template<class T, class...Args> void dbg_out(T &&x, Args&&...args) { std::cerr <
 #endif
 
 /*
- * Created: Jan 17, 2025 @ 13:02:47
+ * Created: Jan 19, 2025 @ 16:50:16
  * Author: will_wang
  */
 void solve() {
-    int n;
-    std::string s;
-    std::cin >> n >> s;
-    std::vector<int> cnt(26);
-    for (auto &c: s) {
-        ++cnt[c - 'a'];
+    int a, b;
+    std::cin >> a >> b;
+    if (a == b) {
+        std::cout << 1 << '\n' << a << '\n';
+        return;
     }
-    int mx = *std::max_element(cnt.begin(), cnt.end());
-    int mn = 1e9;
-    char mx_c, mn_c;
-    for (int i = 0; i < 26; ++i) {
-        if (cnt[i] == 0) {
-            continue;
-        }
-        if (cnt[i] == mx) {
-            mx_c = i + 'a';
-        }
-        if (cnt[i] < mn) {
-            mn = cnt[i];
-            mn_c = i + 'a';
-        }
-    }
-    for (auto &c: s) {
-        if (c == mn_c) {
-            c = mx_c;
-            break;
-        }
-    }
-    std::cout << s << '\n';
 }
 
 int main() {
@@ -66,7 +43,7 @@ int main() {
     std::cin.tie(nullptr);
 
     int t;
-    std::cin >> t;
+    t = 1;
     for (int i = 0; i < t; ++i) {
         // std::cout << "Case #" << (i + 1) << ": ";
         solve();

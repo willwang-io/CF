@@ -26,39 +26,14 @@ template<class T, class...Args> void dbg_out(T &&x, Args&&...args) { std::cerr <
 #endif
 
 /*
- * Created: Jan 17, 2025 @ 13:02:47
+ * Created: Mar 22, 2025 @ 23:36:38
  * Author: will_wang
  */
 void solve() {
-    int n;
-    std::string s;
-    std::cin >> n >> s;
-    std::vector<int> cnt(26);
-    for (auto &c: s) {
-        ++cnt[c - 'a'];
-    }
-    int mx = *std::max_element(cnt.begin(), cnt.end());
-    int mn = 1e9;
-    char mx_c, mn_c;
-    for (int i = 0; i < 26; ++i) {
-        if (cnt[i] == 0) {
-            continue;
-        }
-        if (cnt[i] == mx) {
-            mx_c = i + 'a';
-        }
-        if (cnt[i] < mn) {
-            mn = cnt[i];
-            mn_c = i + 'a';
-        }
-    }
-    for (auto &c: s) {
-        if (c == mn_c) {
-            c = mx_c;
-            break;
-        }
-    }
-    std::cout << s << '\n';
+    long long x, y, a;
+    std::cin >> x >> y >> a;
+    int tmp1 = 2 * ((a / (x + y)) + 1), tmp2 = a < x ? 1 : (((a - x) / (x + y)) + 1) * 2 + 1;
+    std::cout << (tmp2 <= tmp1 ? "NO\n" : "YES\n");
 }
 
 int main() {

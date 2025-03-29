@@ -1,4 +1,5 @@
 #include <map>
+#include <bit>
 #include <set>
 #include <array>
 #include <cmath>
@@ -26,39 +27,37 @@ template<class T, class...Args> void dbg_out(T &&x, Args&&...args) { std::cerr <
 #endif
 
 /*
- * Created: Jan 17, 2025 @ 13:02:47
+ * Created: Mar 27, 2025 @ 17:25:22
  * Author: will_wang
  */
+int mx(int x, int n, int m) {
+    while (x && n) {
+        x = x / 2;
+        --n;
+    }
+    while (x > 1 && m) {
+        x = x / 2 + (x % 2);
+        --m;
+    }
+    return x;
+}
+
+int mn(int x, int n, int m) {
+    while (x > 1 && m) {
+        x = x / 2 + (x % 2);
+        --m;
+    }
+    while (x && n) { 
+        x = x / 2;
+        --n;
+    }
+    return x;
+}
+
 void solve() {
-    int n;
-    std::string s;
-    std::cin >> n >> s;
-    std::vector<int> cnt(26);
-    for (auto &c: s) {
-        ++cnt[c - 'a'];
-    }
-    int mx = *std::max_element(cnt.begin(), cnt.end());
-    int mn = 1e9;
-    char mx_c, mn_c;
-    for (int i = 0; i < 26; ++i) {
-        if (cnt[i] == 0) {
-            continue;
-        }
-        if (cnt[i] == mx) {
-            mx_c = i + 'a';
-        }
-        if (cnt[i] < mn) {
-            mn = cnt[i];
-            mn_c = i + 'a';
-        }
-    }
-    for (auto &c: s) {
-        if (c == mn_c) {
-            c = mx_c;
-            break;
-        }
-    }
-    std::cout << s << '\n';
+    int x, n, m;
+    std::cin >> x >> n >> m;
+    std::cout << mn(x, n, m) << ' ' << mx(x, n, m) << '\n';
 }
 
 int main() {

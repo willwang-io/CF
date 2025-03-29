@@ -26,39 +26,22 @@ template<class T, class...Args> void dbg_out(T &&x, Args&&...args) { std::cerr <
 #endif
 
 /*
- * Created: Jan 17, 2025 @ 13:02:47
+ * Created: Mar 23, 2025 @ 00:13:38
  * Author: will_wang
  */
 void solve() {
     int n;
-    std::string s;
-    std::cin >> n >> s;
-    std::vector<int> cnt(26);
-    for (auto &c: s) {
-        ++cnt[c - 'a'];
+    std::cin >> n;
+    std::vector<int> perm(n);
+    perm[0] = 2;
+    perm[1] = 1;
+    for (int i = 3; i <= n; ++i) {
+        perm[i - 1] = i;
     }
-    int mx = *std::max_element(cnt.begin(), cnt.end());
-    int mn = 1e9;
-    char mx_c, mn_c;
-    for (int i = 0; i < 26; ++i) {
-        if (cnt[i] == 0) {
-            continue;
-        }
-        if (cnt[i] == mx) {
-            mx_c = i + 'a';
-        }
-        if (cnt[i] < mn) {
-            mn = cnt[i];
-            mn_c = i + 'a';
-        }
+    for (auto &x: perm) {
+        std::cout << x << ' ';
     }
-    for (auto &c: s) {
-        if (c == mn_c) {
-            c = mx_c;
-            break;
-        }
-    }
-    std::cout << s << '\n';
+    std::cout << '\n';
 }
 
 int main() {

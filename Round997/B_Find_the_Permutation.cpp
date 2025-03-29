@@ -26,39 +26,26 @@ template<class T, class...Args> void dbg_out(T &&x, Args&&...args) { std::cerr <
 #endif
 
 /*
- * Created: Jan 17, 2025 @ 13:02:47
+ * Created: Jan 17, 2025 @ 08:55:11
  * Author: will_wang
  */
 void solve() {
     int n;
-    std::string s;
-    std::cin >> n >> s;
-    std::vector<int> cnt(26);
-    for (auto &c: s) {
-        ++cnt[c - 'a'];
+    std::cin >> n;
+    std::vector<std::string> a(n);
+    for (auto &x: a) {
+        std::cin >> x;
     }
-    int mx = *std::max_element(cnt.begin(), cnt.end());
-    int mn = 1e9;
-    char mx_c, mn_c;
-    for (int i = 0; i < 26; ++i) {
-        if (cnt[i] == 0) {
-            continue;
-        }
-        if (cnt[i] == mx) {
-            mx_c = i + 'a';
-        }
-        if (cnt[i] < mn) {
-            mn = cnt[i];
-            mn_c = i + 'a';
-        }
+    std::vector<int> ans(n);
+    std::iota(ans.begin(), ans.end(), 1);
+    std::sort(ans.begin(), ans.end(), [&](const auto &x, const auto &y) {
+            if (a[x - 1][y - 1] == '0') return x > y;
+            else return x < y;
+            });
+    for (auto &x: ans) {
+        std::cout << x << ' ';
     }
-    for (auto &c: s) {
-        if (c == mn_c) {
-            c = mx_c;
-            break;
-        }
-    }
-    std::cout << s << '\n';
+    std::cout << '\n';
 }
 
 int main() {
