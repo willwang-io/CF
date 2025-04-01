@@ -27,6 +27,7 @@ void solve() {
     std::string ans = s.substr(1) + s[0];
     if (ans == s) {
         std::cout << "NO\n";
+        
     } else {
         std::cout << "YES\n";
         std::cout << ans << '\n';
