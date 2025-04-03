@@ -35,35 +35,26 @@ void solve() {
     
 }
 
-const int d8i[8] = {0, 0, -1, 1, -1, 1, -1, 1}, d8j[8] = {-1, 1, 0, 0, -1, -1, 1, 1};
-
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int a[3][3];
-    REP(i, 3) {
-        REP(j, 3) {
-            std::cin >> a[i][j];
-        }
-    }
-    int ans[3][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
-    REP(i, 3) {
-        REP(j, 3) {
-            if (!a[i][j]) { continue; }
-            ans[i][j] += a[i][j];
-            REP(k, 4) {
-                int ii = i + d8i[k], jj = j + d8j[k];
-                if (ii >= 0 && ii < 3 && jj >= 0 && jj < 3) {
-                    ans[ii][jj] += a[i][j];
-                }
+    int n;
+    std::cin >> n;
+    int ans = 0;
+    std::set<std::string> s = {"ABSINTH", "BEER", "BRANDY", "CHAMPAGNE", "GIN", "RUM", "SAKE", "TEQUILA", "VODKA", "WHISKEY", "WINE"};
+    REP(i, n) {
+        std::string x;
+        std::cin >> x;
+        if (std::isdigit(x[0])) {
+            int y = std::stoi(x);
+            if (y < 18) {
+                ++ans;
+            }
+        } else {
+            if (s.count(x)) {
+                ++ans;
             }
         }
     }
-    REP(i, 3) {
-        REP(j, 3) {
-            std::cout << (1 - ans[i][j] % 2);
-        }
-        std::cout << '\n';
-    }
+    std::cout << ans << '\n';
 }
-

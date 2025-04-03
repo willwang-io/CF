@@ -32,38 +32,29 @@ template<class T, class...Args> void dbg_out(T &&x, Args&&...args) { std::cerr <
 #endif
 
 void solve() {
-    
+    int n;
+    std::cin >> n;
+    std::vector<int> a(n);
+    EACH(x, a) { std::cin >> x; }
+    auto b = a;
+    std::sort(b.begin(), b.end());
+    REP(i, n - 1) {
+        if (a[i] == b[i]) { continue; }
+        if (std::abs(a[i] - a[i + 1]) == 1) {
+            std::swap(a[i], a[i + 1]);
+        }
+    }
+    std::cout << (a == b ? "YES\n" : "NO\n");
 }
-
-const int d8i[8] = {0, 0, -1, 1, -1, 1, -1, 1}, d8j[8] = {-1, 1, 0, 0, -1, -1, 1, 1};
 
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int a[3][3];
-    REP(i, 3) {
-        REP(j, 3) {
-            std::cin >> a[i][j];
-        }
-    }
-    int ans[3][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
-    REP(i, 3) {
-        REP(j, 3) {
-            if (!a[i][j]) { continue; }
-            ans[i][j] += a[i][j];
-            REP(k, 4) {
-                int ii = i + d8i[k], jj = j + d8j[k];
-                if (ii >= 0 && ii < 3 && jj >= 0 && jj < 3) {
-                    ans[ii][jj] += a[i][j];
-                }
-            }
-        }
-    }
-    REP(i, 3) {
-        REP(j, 3) {
-            std::cout << (1 - ans[i][j] % 2);
-        }
-        std::cout << '\n';
+
+    int t;
+    std::cin >> t;
+    for (int i = 0; i < t; ++i) {
+        // std::cout << "Case #" << (i + 1) << ": ";
+        solve();
     }
 }
-

@@ -35,35 +35,20 @@ void solve() {
     
 }
 
-const int d8i[8] = {0, 0, -1, 1, -1, 1, -1, 1}, d8j[8] = {-1, 1, 0, 0, -1, -1, 1, 1};
-
 int main() {
     std::ios::sync_with_stdio(false);
     std::cin.tie(nullptr);
-    int a[3][3];
-    REP(i, 3) {
-        REP(j, 3) {
-            std::cin >> a[i][j];
-        }
+    std::string s;
+    std::cin >> s;
+    std::vector<std::pair<int, int>> a = {{0, 0}};
+    int cur = s[0] == '(' ? 1 : -1;
+    FOR(i, 1, (int) s.size(), 1) {
+        a.emplace_back(std::make_pair(cur, i));
+        cur += (s[i] == '(' ? 1 : -1);
     }
-    int ans[3][3] = {{0, 0, 0}, {0, 0, 0}, {0, 0, 0}};
-    REP(i, 3) {
-        REP(j, 3) {
-            if (!a[i][j]) { continue; }
-            ans[i][j] += a[i][j];
-            REP(k, 4) {
-                int ii = i + d8i[k], jj = j + d8j[k];
-                if (ii >= 0 && ii < 3 && jj >= 0 && jj < 3) {
-                    ans[ii][jj] += a[i][j];
-                }
-            }
-        }
+    std::sort(a.begin(), a.end(), [](const auto &x, const auto &y) { if (x.first == y.first) { return x.second > y.second; } return x.first < y.first; });
+    EACH(x, a) {
+        std::cout << s[x.second];
     }
-    REP(i, 3) {
-        REP(j, 3) {
-            std::cout << (1 - ans[i][j] % 2);
-        }
-        std::cout << '\n';
-    }
+    std::cout << '\n';
 }
-
