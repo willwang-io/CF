@@ -1,24 +1,23 @@
+//  A. Vanya and Cubes
+
 use std::io::Read;
 
 fn solve(sc: &mut Scanner) -> () {
-    let n = sc.next();
-    let mut cnt = 0;
-    for i in 0..n {
-        let mut x: i32 = sc.next();
-        if x % 2 == 1 {
-            cnt += 1;
+    let n: i32 = sc.next();
+    let mut cur = 0;
+    for i in 1..500 {
+        let tmp = i * (i + 1) / 2;
+        if cur + tmp > n {
+            println!("{}", i - 1);
+            break;
         }
-    }
-    if cnt % 2 == 1 {
-        println!("NO");
-    } else {
-        println!("YES");
+        cur += tmp;
     }
 }
 
 fn main() {
     let mut sc = Scanner::new();
-    let t: usize = sc.next();
+    let t = 1;
     for _ in 0..t {
         solve(&mut sc);
     }
