@@ -11,6 +11,7 @@ fn solve() {
             }
             even = x;
         }
+        
     }
     
     println!("-1");
