@@ -1,19 +1,5 @@
 const N: usize = 100001;
 
-fn dfs(i: usize, cnt: &Vec<i64>, dp: &mut Vec<i64>) -> i64 {
-    if i >= N {
-        return 0;
-    }
-    if dp[i] != -1 {
-        return dp[i];
-    }
-    if cnt[i] == 0 {
-        return dfs(i + 1, cnt, dp);
-    }
-    dp[i] = dfs(i + 1, cnt, dp).max(cnt[i] + dfs(i + 2, cnt, dp));
-    dp[i]
-}
-
 fn main() {
     let n: usize = read();
     let mut cnt = vec![0i64; N];
@@ -22,8 +8,12 @@ fn main() {
         cnt[x as usize] += x;
     }
     let mut dp = vec![-1; N];
-    let ans = dfs(1, &cnt, &mut dp);
-    println!("{ans}");
+    dp[0] = cnt[0];
+    dp[1] = cnt[1];
+    for i in 2..N {
+        dp[i] = dp[i - 1].max(dp[i - 2] + cnt[i]);
+    }
+    println!("{}", dp[N - 1]);
 }
 
 thread_local! {
