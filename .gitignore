@@ -1,1 +1,6 @@
 .DS_Store
+samples
+*.out
+.bin
+.actual
+__pycache__
