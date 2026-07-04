@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import base64
 import json
 import pathlib
 import subprocess
@@ -34,8 +35,12 @@ def main() -> int:
   const languageSubstring = {json.dumps(language_substring)};
   const sourceCode = {json.dumps(source_code)};
 
-  function fail(msg) {{
-    throw new Error("[cf_submit_safari] " + msg);
+  function waiting(msg) {{
+    return "waiting: " + msg;
+  }}
+
+  function failed(msg) {{
+    return "failed: " + msg;
   }}
 
   function setValue(el, value) {{
@@ -44,12 +49,45 @@ def main() -> int:
     el.dispatchEvent(new Event("change", {{ bubbles: true }}));
   }}
 
+  function setSourceCode(value) {{
+    const aceEditorElement = document.querySelector("#editor.ace_editor");
+    if (window.ace && aceEditorElement) {{
+      const editor = window.ace.edit(aceEditorElement);
+      editor.setValue(value, -1);
+      editor.clearSelection();
+      editor.session.getUndoManager().reset();
+    }}
+
+    const sourceTextarea = document.querySelector('textarea[name="source"]');
+    if (!sourceTextarea) return false;
+
+    setValue(sourceTextarea, value);
+    return true;
+  }}
+
+  function getSourceCode() {{
+    const aceEditorElement = document.querySelector("#editor.ace_editor");
+    if (window.ace && aceEditorElement) {{
+      return window.ace.edit(aceEditorElement).getValue();
+    }}
+
+    const sourceTextarea = document.querySelector('textarea[name="source"]');
+    return sourceTextarea ? sourceTextarea.value : null;
+  }}
+
+  if (!/^https?:\\/\\/(?:www\\.)?codeforces\\.com\\/problemset\\/submit(?:[/?#]|$)/.test(location.href)) {{
+    return waiting("submit page to open; currently at " + location.href);
+  }}
+
+  if (document.readyState === "loading") {{
+    return waiting("document to finish loading");
+  }}
+
   const problemInput = document.querySelector('input[name="submittedProblemCode"]');
-  if (!problemInput) fail("Could not find problem code input.");
-  setValue(problemInput, problemCode);
+  if (!problemInput) return waiting("problem code input");
 
   const languageSelect = document.querySelector('select[name="programTypeId"]');
-  if (!languageSelect) fail("Could not find language selector.");
+  if (!languageSelect) return waiting("language selector");
 
   const option = Array.from(languageSelect.options).find(
     opt => opt.textContent.includes(languageSubstring)
@@ -61,39 +99,129 @@ def main() -> int:
       .filter(Boolean)
       .join("\\n");
 
-    fail("Language not found: " + languageSubstring + "\\nAvailable:\\n" + available);
+    if (available) {{
+      return failed("Language not found: " + languageSubstring + "\\nAvailable:\\n" + available);
+    }}
+
+    return waiting("language options");
   }}
 
-  languageSelect.value = option.value;
-  languageSelect.dispatchEvent(new Event("change", {{ bubbles: true }}));
-
   const sourceTextarea = document.querySelector('textarea[name="source"]');
-  if (!sourceTextarea) fail("Could not find source textarea.");
-  setValue(sourceTextarea, sourceCode);
+  const aceEditorElement = document.querySelector("#editor.ace_editor");
+  if (!sourceTextarea && !(window.ace && aceEditorElement)) return waiting("source editor");
 
-  "filled";
+  setValue(problemInput, problemCode);
+  languageSelect.value = option.value;
+  languageSelect.dispatchEvent(new Event("input", {{ bubbles: true }}));
+  languageSelect.dispatchEvent(new Event("change", {{ bubbles: true }}));
+  if (!setSourceCode(sourceCode)) return waiting("source editor to accept value");
+
+  if (problemInput.value !== problemCode) {{
+    return waiting("problem code input to accept value");
+  }}
+
+  if (languageSelect.value !== option.value) {{
+    return waiting("language selector to accept value");
+  }}
+
+  if (getSourceCode() !== sourceCode) {{
+    return waiting("source editor to accept value");
+  }}
+
+  return "filled";
 }})();
 """
 
-    applescript = f"""
-tell application "Safari"
-    activate
-    open location "https://codeforces.com/problemset/submit"
-end tell
+    encoded_js = base64.b64encode(js.encode()).decode()
+    jxa_payload_lines = [
+        "const jsPayload = [",
+        *(
+            f"  {json.dumps(encoded_js[i:i + 12000])},"
+            for i in range(0, len(encoded_js), 12000)
+        ),
+        "].join('');",
+    ]
+    jxa_payload = "\n".join(jxa_payload_lines)
 
-delay 2
+    jxa = f"""
+const app = Application.currentApplication();
+app.includeStandardAdditions = true;
 
-tell application "Safari"
-    set targetTab to current tab of front window
-    do JavaScript {json.dumps(js)} in targetTab
-end tell
+const Safari = Application("Safari");
+Safari.activate();
+
+function findSubmitTab() {{
+  const submitUrl = /^https?:\\/\\/(?:www\\.)?codeforces\\.com\\/problemset\\/submit(?:[/?#]|$)/;
+
+  for (const window of Safari.windows()) {{
+    for (const tab of window.tabs()) {{
+      const url = tab.url();
+      if (url && submitUrl.test(url)) {{
+        return tab;
+      }}
+    }}
+  }}
+
+  return null;
+}}
+
+if (!findSubmitTab()) {{
+  app.openLocation("https://codeforces.com/problemset/submit");
+}}
+
+const timeoutMs = 30000;
+const startedAt = Date.now();
+let lastStatus = "waiting: Safari to open the submit page";
+
+{jxa_payload}
+const scriptSource = "eval(atob('" + jsPayload + "'))";
+
+delay(0.2);
+
+while (true) {{
+  try {{
+    const targetTab = findSubmitTab();
+    if (!targetTab) {{
+      lastStatus = "waiting: submit page tab";
+    }} else {{
+      lastStatus = Safari.doJavaScript(scriptSource, {{ in: targetTab }});
+    }}
+  }} catch (error) {{
+    lastStatus = "waiting: " + error.message;
+  }}
+
+  if (lastStatus === "filled") {{
+    break;
+  }}
+
+  if (lastStatus.startsWith("failed: ")) {{
+    throw new Error("[cf_submit_safari] " + lastStatus);
+  }}
+
+  if (Date.now() - startedAt > timeoutMs) {{
+    throw new Error(
+      "[cf_submit_safari] Timed out after " +
+        timeoutMs / 1000 +
+        " seconds; last status: " +
+        lastStatus
+    );
+  }}
+
+  delay(0.25);
+}}
 """
 
-    with tempfile.NamedTemporaryFile("w", suffix=".applescript", delete=False) as f:
-        f.write(applescript)
+    with tempfile.NamedTemporaryFile("w", suffix=".jxa.js", delete=False) as f:
+        f.write(jxa)
         script_path = f.name
 
-    subprocess.run(["osascript", script_path], check=True)
+    try:
+        subprocess.run(["/usr/bin/osascript", "-l", "JavaScript", script_path], check=True)
+    except Exception:
+        print(f"Generated script kept for debugging: {script_path}", file=sys.stderr)
+        raise
+    else:
+        pathlib.Path(script_path).unlink(missing_ok=True)
 
     return 0
 
