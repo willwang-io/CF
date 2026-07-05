@@ -3,10 +3,16 @@
 #include <vector>
 #include <algorithm>
 
+#ifdef LOCAL
+#include "debug.hpp"
+#else
+#define dbg(...)
+#endif
+
 using ll = long long;
 
 void solve() {
-
+    
 }
 
 int main() {
