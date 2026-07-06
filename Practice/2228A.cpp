@@ -3,33 +3,27 @@
 #include <vector>
 #include <algorithm>
 
+using ll = long long;
+
 #ifdef LOCAL
 #include "debug.hpp"
 #else
 #define dbg(...)
 #endif
 
-using ll = long long;
-
 void solve() {
     int n;
     std::cin >> n;
-    std::vector<int> a(n);
-    int diff = 1e9;
-    bool ok = true;
+    int cnt[3] = {};
     for (int i = 0; i < n; ++i) {
-        std::cin >> a[i];
-        if (i == 0) {
-            continue;
-        }
-        diff = std::min(diff, a[i] - a[i - 1]);
-        ok &= a[i] >= a[i - 1];
+        int x;
+        std::cin >> x;
+        ++cnt[x];
     }
-    if (!ok) {
-        std::cout << "0\n";
-    } else {
-        std::cout << diff / 2 + 1 << '\n';
-    }
+    int tmp = std::min(cnt[1], cnt[2]);
+    cnt[1] -= tmp;
+    cnt[2] -= tmp;
+    std::cout << cnt[0] + tmp + cnt[1] / 3 + cnt[2] / 3 << '\n';
 }
 
 int main() {

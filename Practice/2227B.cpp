@@ -13,23 +13,17 @@ using ll = long long;
 
 void solve() {
     int n;
-    std::cin >> n;
-    std::vector<int> a(n);
-    int diff = 1e9;
-    bool ok = true;
-    for (int i = 0; i < n; ++i) {
-        std::cin >> a[i];
-        if (i == 0) {
-            continue;
+    std::string s;
+    std::cin >> n >> s;
+    int cnt = 0;
+    for (auto &x: s) {
+        if (x == '(') {
+            ++cnt;
+        } else {
+            --cnt;
         }
-        diff = std::min(diff, a[i] - a[i - 1]);
-        ok &= a[i] >= a[i - 1];
     }
-    if (!ok) {
-        std::cout << "0\n";
-    } else {
-        std::cout << diff / 2 + 1 << '\n';
-    }
+    std::cout << (cnt == 0 ? "YES\n" : "NO\n");
 }
 
 int main() {

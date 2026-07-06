@@ -12,24 +12,19 @@
 using ll = long long;
 
 void solve() {
-    int n;
-    std::cin >> n;
-    std::vector<int> a(n);
-    int diff = 1e9;
-    bool ok = true;
-    for (int i = 0; i < n; ++i) {
-        std::cin >> a[i];
-        if (i == 0) {
-            continue;
-        }
-        diff = std::min(diff, a[i] - a[i - 1]);
-        ok &= a[i] >= a[i - 1];
-    }
-    if (!ok) {
+    int n, k, p;
+    std::cin >> n >> k >> p;
+    k = std::abs(k);
+    if (!k) {
         std::cout << "0\n";
-    } else {
-        std::cout << diff / 2 + 1 << '\n';
+        return;
     }
+    if (p * n < k) {
+        std::cout << "-1\n";
+        return;
+    }
+    int tmp = k / p + (k % p == 0 ? 0 : 1);
+    std::cout << std::min(tmp, n) << '\n';
 }
 
 int main() {
