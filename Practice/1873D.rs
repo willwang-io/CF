@@ -1,23 +1,20 @@
 fn solve() {
     let n: usize = read();
-    let mut a: Vec<i32> = (0..n).map(|_| read()).collect();
-    a.sort();
-    if a[0] == a[n - 1] {
-        println!("{}", -1);
-    } else {
-        let mut i = 0;
-        while a[i] == a[0] {
+    let k: usize = read();
+    let s: String = read();
+
+    let b = s.as_bytes();
+    let mut i = 0;
+    let mut ans = 0;
+    while i < n {
+        if b[i] == b'B' {
+            i += k;
+            ans += 1;
+        } else {
             i += 1;
         }
-        println!("{} {}", i, n - i);
-        for j in 0..i {
-            print!("{} ", a[j]);
-        }
-        for j in i..n {
-            print!("{} ", a[j]);
-        }
-        println!();
     }
+    println!("{}", ans);
 }
 
 fn main() {

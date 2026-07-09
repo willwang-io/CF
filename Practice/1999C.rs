@@ -1,23 +1,17 @@
 fn solve() {
     let n: usize = read();
-    let mut a: Vec<i32> = (0..n).map(|_| read()).collect();
-    a.sort();
-    if a[0] == a[n - 1] {
-        println!("{}", -1);
-    } else {
-        let mut i = 0;
-        while a[i] == a[0] {
-            i += 1;
+    let s: i32 = read();
+    let m: i32 = read();
+    let mut a: Vec<(i32, i32)> = (0..n).map(|_| (read(), read())).collect();
+    let mut pr = 0;
+    let mut ok = false;
+    for (l, r) in a {
+        if l - pr >= s {
+            ok = true;
         }
-        println!("{} {}", i, n - i);
-        for j in 0..i {
-            print!("{} ", a[j]);
-        }
-        for j in i..n {
-            print!("{} ", a[j]);
-        }
-        println!();
+        pr = r;
     }
+    println!("{}", if ok || m - pr >= s { "YES" } else { "NO" });
 }
 
 fn main() {

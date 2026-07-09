@@ -1,23 +1,9 @@
 fn solve() {
-    let n: usize = read();
-    let mut a: Vec<i32> = (0..n).map(|_| read()).collect();
-    a.sort();
-    if a[0] == a[n - 1] {
-        println!("{}", -1);
-    } else {
-        let mut i = 0;
-        while a[i] == a[0] {
-            i += 1;
-        }
-        println!("{} {}", i, n - i);
-        for j in 0..i {
-            print!("{} ", a[j]);
-        }
-        for j in i..n {
-            print!("{} ", a[j]);
-        }
-        println!();
-    }
+    let s: String = read();
+    let a = s.chars().filter(|&c| c == 'A').count();
+    let b = s.chars().filter(|&c| c == 'B').count();
+    let c = s.chars().filter(|&c| c == 'C').count();
+    println!("{}", if a + c == b { "YES" } else { "NO" });
 }
 
 fn main() {

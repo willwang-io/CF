@@ -1,22 +1,11 @@
 fn solve() {
     let n: usize = read();
-    let mut a: Vec<i32> = (0..n).map(|_| read()).collect();
-    a.sort();
-    if a[0] == a[n - 1] {
-        println!("{}", -1);
+    let a: Vec<i32> = (0..n).map(|_| read()).collect();
+    let sum: i32 = a.iter().sum();
+    if sum < n as i32 {
+        println!("{}", 1);
     } else {
-        let mut i = 0;
-        while a[i] == a[0] {
-            i += 1;
-        }
-        println!("{} {}", i, n - i);
-        for j in 0..i {
-            print!("{} ", a[j]);
-        }
-        for j in i..n {
-            print!("{} ", a[j]);
-        }
-        println!();
+        println!("{}", sum - n as i32);
     }
 }
 
