@@ -1,25 +1,37 @@
-fn gcd(mut a: i32, mut b: i32) -> i32 {
-    while b > 0 {
-        (a, b) = (b, a % b);
-    }
-    a
-}
-
 fn solve() {
     let n: usize = read();
-    let a: Vec<i32> = (0..n).map(|_| read()).collect();
+    let mut g: Vec<Vec<char>> = (0..n).map(|_| read::<String>().chars().collect()).collect();
+
+    let mut x = (n, n);
+    let mut y = (n, n);
     for i in 0..n {
         for j in 0..n {
-            if i == j {
-                continue;
-            }
-            if gcd(a[i], a[j]) <= 2 {
-                println!("YES");
-                return;
+            if g[i][j] == '*' {
+                if x.0 == n {
+                    x = (i, j);
+                } else {
+                    y = (i, j);
+                }
             }
         }
     }
-    println!("NO");
+
+    if x.0 == y.0 {
+        let r = if x.0 == 0 { 1 } else { 0 };
+        g[r][x.1] = '*';
+        g[r][y.1] = '*';
+    } else if x.1 == y.1 {
+        let c = if x.1 == 0 { 1 } else { 0 };
+        g[x.0][c] = '*';
+        g[y.0][c] = '*';
+    } else {
+        g[x.0][y.1] = '*';
+        g[y.0][x.1] = '*';
+    }
+
+    for row in g {
+        println!("{}", row.into_iter().collect::<String>());
+    }
 }
 
 fn main() {

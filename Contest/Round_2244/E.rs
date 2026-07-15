@@ -1,25 +1,28 @@
-fn gcd(mut a: i32, mut b: i32) -> i32 {
-    while b > 0 {
-        (a, b) = (b, a % b);
-    }
-    a
-}
-
 fn solve() {
     let n: usize = read();
-    let a: Vec<i32> = (0..n).map(|_| read()).collect();
-    for i in 0..n {
-        for j in 0..n {
-            if i == j {
-                continue;
-            }
-            if gcd(a[i], a[j]) <= 2 {
-                println!("YES");
-                return;
-            }
+    let q: usize = read();
+    let s: String = read();
+    let s = s.as_bytes();
+
+    let mut psum = vec![0_i64; n + 1];
+    for i in 1..n {
+        psum[i + 1] = psum[i];
+        if s[i] == s[i - 1] {
+            psum[i + 1] += 1;
         }
     }
-    println!("NO");
+
+    for _ in 0..q {
+        let l: usize = read();
+        let r: usize = read();
+        let k: i64 = read();
+        let x = psum[r] - psum[l];
+        if (x + 1) / 2 <= k {
+            println!("YES");
+        } else {
+            println!("NO");
+        }
+    }
 }
 
 fn main() {

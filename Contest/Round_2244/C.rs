@@ -1,4 +1,4 @@
-fn gcd(mut a: i32, mut b: i32) -> i32 {
+fn gcd(mut a: i64, mut b: i64) -> i64 {
     while b > 0 {
         (a, b) = (b, a % b);
     }
@@ -6,20 +6,25 @@ fn gcd(mut a: i32, mut b: i32) -> i32 {
 }
 
 fn solve() {
-    let n: usize = read();
-    let a: Vec<i32> = (0..n).map(|_| read()).collect();
-    for i in 0..n {
-        for j in 0..n {
-            if i == j {
-                continue;
-            }
-            if gcd(a[i], a[j]) <= 2 {
-                println!("YES");
-                return;
-            }
+    let n: i64 = read();
+    let x: i64 = read();
+    let y: i64 = read();
+
+    let g = gcd(x, y);
+    let mut ok = true;
+
+    for i in 1..=n {
+        let p: i64 = read();
+        if i % g != p % g {
+            ok = false;
         }
     }
-    println!("NO");
+
+    if ok {
+        println!("YES");
+    } else {
+        println!("NO");
+    }
 }
 
 fn main() {

@@ -1,25 +1,25 @@
-fn gcd(mut a: i32, mut b: i32) -> i32 {
-    while b > 0 {
-        (a, b) = (b, a % b);
-    }
-    a
-}
-
 fn solve() {
     let n: usize = read();
-    let a: Vec<i32> = (0..n).map(|_| read()).collect();
-    for i in 0..n {
-        for j in 0..n {
-            if i == j {
-                continue;
-            }
-            if gcd(a[i], a[j]) <= 2 {
-                println!("YES");
-                return;
-            }
-        }
+    let m: usize = read();
+
+    let mut psum: Vec<i64> = vec![0; n + 1];
+    for i in 1..=n {
+        let x: i64 = read();
+        psum[i] = x + psum[i - 1];
     }
-    println!("NO");
+
+    let mut b: Vec<usize> = (0..m).map(|_| read()).collect();
+    b.sort();
+
+    let mut ans = 0;
+    let mut prev = 0;
+    for x in b {
+        ans += (psum[x] - psum[prev]).abs();
+        prev = x;
+    }
+
+    ans += psum[n] - psum[prev];
+    println!("{}", ans);
 }
 
 fn main() {

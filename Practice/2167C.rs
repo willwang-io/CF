@@ -1,25 +1,15 @@
-fn gcd(mut a: i32, mut b: i32) -> i32 {
-    while b > 0 {
-        (a, b) = (b, a % b);
-    }
-    a
-}
-
 fn solve() {
     let n: usize = read();
-    let a: Vec<i32> = (0..n).map(|_| read()).collect();
-    for i in 0..n {
-        for j in 0..n {
-            if i == j {
-                continue;
-            }
-            if gcd(a[i], a[j]) <= 2 {
-                println!("YES");
-                return;
-            }
-        }
+    let mut a: Vec<i32> = (0..n).map(|_| read()).collect();
+    let even = a.iter().any(|&x| x % 2 == 0);
+    let odd = a.iter().any(|&x| x % 2 != 0);
+    if odd && even {
+        a.sort();
     }
-    println!("NO");
+    for x in a {
+        print!("{} ", x);
+    }
+    println!("");
 }
 
 fn main() {

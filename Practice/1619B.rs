@@ -1,25 +1,20 @@
-fn gcd(mut a: i32, mut b: i32) -> i32 {
-    while b > 0 {
-        (a, b) = (b, a % b);
-    }
-    a
-}
+use std::collections::HashSet;
 
 fn solve() {
-    let n: usize = read();
-    let a: Vec<i32> = (0..n).map(|_| read()).collect();
-    for i in 0..n {
-        for j in 0..n {
-            if i == j {
-                continue;
-            }
-            if gcd(a[i], a[j]) <= 2 {
-                println!("YES");
-                return;
-            }
-        }
+    let n: i64 = read();
+
+    let mut cnt = HashSet::new();
+    let mut i = 1;
+    while i * i <= n {
+        cnt.insert(i * i);
+        i += 1;
     }
-    println!("NO");
+    let mut i = 1;
+    while i * i * i <= n {
+        cnt.insert(i * i * i);
+        i += 1;
+    }
+    println!("{}", cnt.len());
 }
 
 fn main() {

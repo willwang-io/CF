@@ -1,25 +1,23 @@
-fn gcd(mut a: i32, mut b: i32) -> i32 {
-    while b > 0 {
-        (a, b) = (b, a % b);
-    }
-    a
-}
+use std::collections::HashMap;
 
 fn solve() {
     let n: usize = read();
-    let a: Vec<i32> = (0..n).map(|_| read()).collect();
-    for i in 0..n {
-        for j in 0..n {
-            if i == j {
-                continue;
-            }
-            if gcd(a[i], a[j]) <= 2 {
-                println!("YES");
-                return;
-            }
-        }
+    let s: String = read();
+
+    let mut t: Vec<u8> = s.bytes().collect();
+    t.sort();
+    t.dedup();
+
+    let m = t.len();
+    let mut cnt: HashMap<u8, u8> = HashMap::new();
+
+    for i in 0..(m + 1) / 2 {
+        cnt.insert(t[i], t[m - i - 1]);
+        cnt.insert(t[m - i - 1], t[i]);
     }
-    println!("NO");
+
+    let tmp: String = s.bytes().map(|b| *cnt.get(&b).unwrap() as char).collect();
+    println!("{tmp}");
 }
 
 fn main() {
