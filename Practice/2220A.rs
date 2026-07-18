@@ -1,13 +1,20 @@
+use std::collections::HashSet;
+
 fn solve() {
-    let n: i64 = read();
-    let k: i64 = read();
-    let l = n - k + 1;
-    let cnt = (n + 1) / 2 - l / 2;
-    if cnt % 2 == 0 {
-        println!("YES");
-    } else {
-        println!("NO");
+    let n: usize = read();
+    let mut a: Vec<i32> = (0..n).map(|_| read()).collect();
+    let s: HashSet<i32> = a.iter().copied().collect();
+
+    if s.len() < n {
+        println!("-1");
+        return;
     }
+
+    a.sort_by_key(|&k| std::cmp::Reverse(k));
+    for x in a {
+        print!("{x} ");
+    }
+    println!("");
 }
 
 fn main() {

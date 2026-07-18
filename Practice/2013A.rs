@@ -1,13 +1,9 @@
 fn solve() {
     let n: i64 = read();
-    let k: i64 = read();
-    let l = n - k + 1;
-    let cnt = (n + 1) / 2 - l / 2;
-    if cnt % 2 == 0 {
-        println!("YES");
-    } else {
-        println!("NO");
-    }
+    let x: i64 = read();
+    let y: i64 = read();
+    let z = x.min(y);
+    println!("{}", (n + z - 1) / z);
 }
 
 fn main() {

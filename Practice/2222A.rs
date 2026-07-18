@@ -1,9 +1,8 @@
 fn solve() {
-    let n: i64 = read();
-    let k: i64 = read();
-    let l = n - k + 1;
-    let cnt = (n + 1) / 2 - l / 2;
-    if cnt % 2 == 0 {
+    let n: usize = read();
+    let a: Vec<i32> = (0..n).map(|_| read()).collect();
+    let ok = a.iter().any(|&x| x == 100);
+    if ok {
         println!("YES");
     } else {
         println!("NO");

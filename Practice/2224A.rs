@@ -1,13 +1,14 @@
 fn solve() {
-    let n: i64 = read();
-    let k: i64 = read();
-    let l = n - k + 1;
-    let cnt = (n + 1) / 2 - l / 2;
-    if cnt % 2 == 0 {
-        println!("YES");
-    } else {
-        println!("NO");
+    let n: usize = read();
+    let mut a: Vec<i64> = (0..n).map(|_| read()).collect();
+    let mut ans = if a[n - 1] > 0 { 1 } else { 0 };
+    for i in (0..=n - 2).rev() {
+        if a[i + 1] > 0 {
+            a[i] += a[i + 1];
+        }
+        ans += if a[i] > 0 { 1 } else { 0 };
     }
+    println!("{ans}");
 }
 
 fn main() {

@@ -1,13 +1,11 @@
 fn solve() {
-    let n: i64 = read();
-    let k: i64 = read();
-    let l = n - k + 1;
-    let cnt = (n + 1) / 2 - l / 2;
-    if cnt % 2 == 0 {
-        println!("YES");
-    } else {
-        println!("NO");
-    }
+    let n: usize = read();
+    let m: usize = read();
+    let _: i32 = read();
+    let _: i32 = read();
+    let _: Vec<i32> = (0..n).map(|_| read()).collect();
+    let _: Vec<i32> = (0..m).map(|_| read()).collect();
+    println!("{}", n + m);
 }
 
 fn main() {

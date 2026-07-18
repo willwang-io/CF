@@ -1,9 +1,8 @@
 fn solve() {
-    let n: i64 = read();
-    let k: i64 = read();
-    let l = n - k + 1;
-    let cnt = (n + 1) / 2 - l / 2;
-    if cnt % 2 == 0 {
+    let n: usize = read();
+    let s: String = read();
+    let s = s.as_bytes();
+    if s[0] != s[n - 1] {
         println!("YES");
     } else {
         println!("NO");

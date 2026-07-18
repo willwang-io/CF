@@ -1,13 +1,17 @@
 fn solve() {
-    let n: i64 = read();
-    let k: i64 = read();
-    let l = n - k + 1;
-    let cnt = (n + 1) / 2 - l / 2;
-    if cnt % 2 == 0 {
-        println!("YES");
-    } else {
-        println!("NO");
+    let n: usize = read();
+    for i in 0..n {
+        if i % 2 == 0 {
+            print!("-1 ");
+        } else {
+            if i + 1 == n {
+                print!("2 ");
+            } else {
+                print!("3 ");
+            }
+        }
     }
+    println!("");
 }
 
 fn main() {

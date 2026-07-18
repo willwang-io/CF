@@ -1,13 +1,12 @@
 fn solve() {
-    let n: i64 = read();
-    let k: i64 = read();
-    let l = n - k + 1;
-    let cnt = (n + 1) / 2 - l / 2;
-    if cnt % 2 == 0 {
-        println!("YES");
-    } else {
-        println!("NO");
+    let s: String = read();
+    let s = s.as_bytes();
+    let mut cnt = [0; 26];
+    for &b in s {
+        cnt[(b - b'a') as usize] += 1;
     }
+    let mut ans: i32 = cnt.iter().map(|&x| x.min(2)).sum();
+    println!("{}", ans / 2);
 }
 
 fn main() {

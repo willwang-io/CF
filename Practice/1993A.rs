@@ -1,13 +1,15 @@
 fn solve() {
-    let n: i64 = read();
-    let k: i64 = read();
-    let l = n - k + 1;
-    let cnt = (n + 1) / 2 - l / 2;
-    if cnt % 2 == 0 {
-        println!("YES");
-    } else {
-        println!("NO");
+    let n: usize = read();
+    let s: String = read();
+    let mut cnt = [0, 0, 0, 0];
+    for b in s.bytes() {
+        if b == b'?' {
+            continue;
+        }
+        cnt[(b - b'A') as usize] += 1;
     }
+    let ans: usize = cnt.iter().map(|&x| x.min(n)).sum();
+    println!("{ans}");
 }
 
 fn main() {

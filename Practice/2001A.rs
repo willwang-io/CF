@@ -1,13 +1,12 @@
 fn solve() {
-    let n: i64 = read();
-    let k: i64 = read();
-    let l = n - k + 1;
-    let cnt = (n + 1) / 2 - l / 2;
-    if cnt % 2 == 0 {
-        println!("YES");
-    } else {
-        println!("NO");
+    let n: usize = read();
+    let mut cnt = vec![0; n + 1];
+    for _ in 0..n {
+        let x: usize = read();
+        cnt[x] += 1;
     }
+    let mx = cnt.iter().max().unwrap();
+    println!("{}", n - mx);
 }
 
 fn main() {

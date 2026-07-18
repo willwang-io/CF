@@ -1,20 +1,23 @@
 fn solve() {
-    let n: i64 = read();
-    let k: i64 = read();
-    let l = n - k + 1;
-    let cnt = (n + 1) / 2 - l / 2;
-    if cnt % 2 == 0 {
-        println!("YES");
-    } else {
-        println!("NO");
+    let n: usize = read();
+    let s: String = read();
+    let mut cnt = [0; 26];
+    for b in s.bytes() {
+        cnt[(b - b'a') as usize] += 1;
     }
+    let zero = cnt[25];
+    let one = cnt[4] - zero;
+    for _ in 0..one {
+        print!("1 ");
+    }
+    for _ in 0..zero {
+        print!("0 ");
+    }
+    println!("");
 }
 
 fn main() {
-    let t: usize = read();
-    for _ in 0..t {
-        solve();
-    }
+    solve();
 }
 
 thread_local! {

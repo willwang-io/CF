@@ -1,13 +1,13 @@
 fn solve() {
     let n: i64 = read();
-    let k: i64 = read();
-    let l = n - k + 1;
-    let cnt = (n + 1) / 2 - l / 2;
-    if cnt % 2 == 0 {
-        println!("YES");
-    } else {
-        println!("NO");
+    let a: Vec<i64> = (0..n).map(|_| read()).collect();
+    let sum: i64 = a.iter().sum();
+    if sum % n != 0 {
+        println!("-1");
+        return;
     }
+    let ans = a.iter().filter(|&&x| x > sum / n).count();
+    println!("{ans}");
 }
 
 fn main() {

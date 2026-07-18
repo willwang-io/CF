@@ -1,20 +1,17 @@
 fn solve() {
-    let n: i64 = read();
-    let k: i64 = read();
-    let l = n - k + 1;
-    let cnt = (n + 1) / 2 - l / 2;
-    if cnt % 2 == 0 {
-        println!("YES");
-    } else {
-        println!("NO");
-    }
+    let d1: i32 = read();
+    let d2: i32 = read();
+    let d3: i32 = read();
+
+    let ans = (d1 + d2 + d3)
+        .min(2 * (d1 + d2))
+        .min(2 * (d1 + d3))
+        .min(2 * (d2 + d3));
+    println!("{ans}");
 }
 
 fn main() {
-    let t: usize = read();
-    for _ in 0..t {
-        solve();
-    }
+    solve();
 }
 
 thread_local! {

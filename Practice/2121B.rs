@@ -1,9 +1,12 @@
 fn solve() {
-    let n: i64 = read();
-    let k: i64 = read();
-    let l = n - k + 1;
-    let cnt = (n + 1) / 2 - l / 2;
-    if cnt % 2 == 0 {
+    let n: usize = read();
+    let s: String = read();
+    let s = s.as_bytes();
+    let mut cnt = [0; 26];
+    for &b in s {
+        cnt[(b - b'a') as usize] += 1;
+    }
+    if (1..n - 1).any(|i| cnt[(s[i] - b'a') as usize] > 1) {
         println!("YES");
     } else {
         println!("NO");
