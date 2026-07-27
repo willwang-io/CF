@@ -1,5 +1,18 @@
+// Created: Jul 27 2026, 00:10:23
+// Formatted with rustfmt.
+
 fn solve() {
-    
+    let s: Vec<_> = read::<String>().chars().collect();
+    let mut prev = 0;
+    let mut ans = 0;
+    for i in 0..s.len() {
+        if s[i] == 'R' {
+            let p = i + 1;
+            ans = ans.max(p - prev);
+            prev = p;
+        }
+    }
+    println!("{}", ans.max(s.len() + 1 - prev));
 }
 
 fn main() {
@@ -16,7 +29,7 @@ thread_local! {
         Box::leak(input.into_boxed_str()).split_ascii_whitespace()
     });
 }
- 
+
 pub fn read<T: std::str::FromStr>() -> T
 where
     T::Err: std::fmt::Debug,
