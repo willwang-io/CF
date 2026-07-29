@@ -1,22 +1,23 @@
-// Created: Jul 28 2026, 13:23:21
+// Created: Jul 27 2026, 23:21:59
 // Formatted with rustfmt.
+
+use std::collections::HashMap;
 
 fn solve() {
     let n: usize = read();
-    let mut a: Vec<i64> = (0..n).map(|_| read()).collect();
-    a.sort_unstable();
+    let mut cnt = vec![0; n + 1];
+    let mut a = Vec::with_capacity(n);
 
-    let ok = if n == 1 {
-        a[0] == 1
-    } else {
-        a[n - 1] - a[n - 2] <= 1
-    };
-
-    if ok {
-        println!("YES");
-    } else {
-        println!("NO");
+    for _ in 0..n {
+        let x: usize = read();
+        a.push(x);
+        cnt[x] += 1;
     }
+
+    let ans = (1..=n)
+        .find(|&x| cnt[x] == 1)
+        .map_or(-1, |x| a.iter().position(|&y| y == x).unwrap() as i32 + 1);
+    println!("{ans}");
 }
 
 fn main() {

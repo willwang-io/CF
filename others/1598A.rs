@@ -1,16 +1,12 @@
-// Created: Jul 28 2026, 13:23:21
+// Created: Jul 26 2026, 22:04:03
 // Formatted with rustfmt.
 
 fn solve() {
-    let n: usize = read();
-    let mut a: Vec<i64> = (0..n).map(|_| read()).collect();
-    a.sort_unstable();
+    let _: usize = read();
+    let s = read::<String>();
+    let t = read::<String>();
 
-    let ok = if n == 1 {
-        a[0] == 1
-    } else {
-        a[n - 1] - a[n - 2] <= 1
-    };
+    let ok = s.chars().zip(t.chars()).any(|(x, y)| x == y && x == '1');
 
     if ok {
         println!("YES");

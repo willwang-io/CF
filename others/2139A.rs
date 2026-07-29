@@ -1,22 +1,25 @@
-// Created: Jul 28 2026, 13:23:21
+// Created: Jul 27 2026, 12:53:56
 // Formatted with rustfmt.
 
-fn solve() {
-    let n: usize = read();
-    let mut a: Vec<i64> = (0..n).map(|_| read()).collect();
-    a.sort_unstable();
-
-    let ok = if n == 1 {
-        a[0] == 1
-    } else {
-        a[n - 1] - a[n - 2] <= 1
-    };
-
-    if ok {
-        println!("YES");
-    } else {
-        println!("NO");
+fn gcd(mut a: i32, mut b: i32) -> i32 {
+    while b > 0 {
+        (a, b) = (b, a % b);
     }
+    a
+}
+
+fn solve() {
+    let a: i32 = read();
+    let b: i32 = read();
+    let l = (a * b) / gcd(a, b);
+    let ans = if l == a && l == b {
+        0
+    } else if l == a || l == b {
+        1
+    } else {
+        2
+    };
+    println!("{ans}");
 }
 
 fn main() {

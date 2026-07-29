@@ -1,22 +1,35 @@
-// Created: Jul 28 2026, 13:23:21
-// Formatted with rustfmt.
+// Created: Jul 26 2026, 14:35:49
 
 fn solve() {
     let n: usize = read();
-    let mut a: Vec<i64> = (0..n).map(|_| read()).collect();
-    a.sort_unstable();
-
-    let ok = if n == 1 {
-        a[0] == 1
-    } else {
-        a[n - 1] - a[n - 2] <= 1
-    };
-
-    if ok {
-        println!("YES");
-    } else {
-        println!("NO");
+    let mut a = Vec::with_capacity(n);
+    for _ in 0..n {
+        a.push((
+            read::<usize>(),
+            read::<usize>(),
+            read::<usize>(),
+            read::<usize>(),
+        ));
     }
+
+    let mut ans = 0;
+    for m in (1..=n).rev() {
+        let mut j = 1;
+        for &(l, r, u, v) in &a {
+            let k = m - j + 1;
+            if (j < l || j > r) && (k < u || k > v) {
+                j += 1;
+                if j > m {
+                    break;
+                }
+            }
+        }
+        if j > m {
+            ans = m;
+            break;
+        }
+    }
+    println!("{ans}");
 }
 
 fn main() {

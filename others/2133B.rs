@@ -1,22 +1,12 @@
-// Created: Jul 28 2026, 13:23:21
+// Created: Jul 29 2026, 10:45:08
 // Formatted with rustfmt.
 
 fn solve() {
     let n: usize = read();
     let mut a: Vec<i64> = (0..n).map(|_| read()).collect();
     a.sort_unstable();
-
-    let ok = if n == 1 {
-        a[0] == 1
-    } else {
-        a[n - 1] - a[n - 2] <= 1
-    };
-
-    if ok {
-        println!("YES");
-    } else {
-        println!("NO");
-    }
+    let ans: i64 = a.iter().rev().step_by(2).sum();
+    println!("{ans}");
 }
 
 fn main() {
