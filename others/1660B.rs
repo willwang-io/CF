@@ -1,21 +1,19 @@
-// Created: Jul 28 2026, 13:23:21
-// Formatted with rustfmt.
-
 fn solve() {
     let n: usize = read();
-    let mut a: Vec<i64> = (0..n).map(|_| read()).collect();
-    a.sort_unstable();
-
-    let ok = if n == 1 {
-        a[0] == 1
+    let mut a: Vec<i32> = (0..n).map(|_| read()).collect();
+    a.sort();
+    if n == 1 {
+        if a[0] <= 1 {
+            println!("YES");
+        } else {
+            println!("NO");
+        }
     } else {
-        a[n - 1] - a[n - 2] <= 1
-    };
-
-    if ok {
-        println!("YES");
-    } else {
-        println!("NO");
+        if a[n - 2] + 1 >= a[n - 1] {
+            println!("YES");
+        } else {
+            println!("NO");
+        }
     }
 }
 

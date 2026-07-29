@@ -1,12 +1,21 @@
-// Created: Jul 26 2026, 14:56:15
+// Created: Jul 29 2026, 10:47:57
 // Formatted with rustfmt.
 
 fn solve() {
-    let a: i64 = read();
-    let b: i64 = read();
-    let c: i64 = read();
-    let need = (3 - b % 3) % 3;
-    let ans = if c < need { -1 } else { a + (b + c + 2) / 3 };
+    let n: usize = read();
+    let mut l = 0i64;
+    let mut r = i64::MAX;
+    let mut v = Vec::new();
+    for _ in 0..n {
+        let a: i32 = read();
+        let x: i64 = read();
+        match a {
+            1 => l = l.max(x),
+            2 => r = r.min(x),
+            _ => v.push(x),
+        }
+    }
+    let ans = (r - l + 1 - v.into_iter().filter(|&x| l <= x && x <= r).count() as i64).max(0);
     println!("{ans}");
 }
 

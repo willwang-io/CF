@@ -1,13 +1,15 @@
-// Created: Jul 26 2026, 14:56:15
+// Created: Jul 27 2026, 23:19:10
 // Formatted with rustfmt.
 
 fn solve() {
-    let a: i64 = read();
-    let b: i64 = read();
-    let c: i64 = read();
-    let need = (3 - b % 3) % 3;
-    let ans = if c < need { -1 } else { a + (b + c + 2) / 3 };
-    println!("{ans}");
+    let n: usize = read();
+    let mut cnt = 0;
+    for i in 1..=n {
+        if read::<usize>() == i {
+            cnt += 1;
+        }
+    }
+    println!("{}", (cnt + 1) / 2);
 }
 
 fn main() {

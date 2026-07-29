@@ -1,12 +1,26 @@
-// Created: Jul 26 2026, 14:56:15
+// Created: Jul 29 2026, 10:59:47
 // Formatted with rustfmt.
 
 fn solve() {
-    let a: i64 = read();
-    let b: i64 = read();
-    let c: i64 = read();
-    let need = (3 - b % 3) % 3;
-    let ans = if c < need { -1 } else { a + (b + c + 2) / 3 };
+    let s: String = read();
+    let mut seen = [false; 26];
+    let mut cnt = 0;
+    let mut ans = 1;
+
+    for b in s.bytes() {
+        let i = (b - b'a') as usize;
+
+        if !seen[i] {
+            if cnt == 3 {
+                seen = [false; 26];
+                cnt = 0;
+                ans += 1;
+            }
+            seen[i] = true;
+            cnt += 1;
+        }
+    }
+
     println!("{ans}");
 }
 
