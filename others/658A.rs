@@ -1,0 +1,46 @@
+// Created: Aug  1 2026, 18:23:48
+// Formatted with rustfmt.
+
+fn solve() {
+    let n: usize = read();
+    let c: i32 = read();
+    let p: Vec<i32> = (0..n).map(|_| read()).collect();
+    let t: Vec<i32> = (0..n).map(|_| read()).collect();
+    let mut l = 0;
+    let mut r = 0;
+    let mut lt = 0;
+    let mut rt = 0;
+    for i in 0..n {
+        lt += t[i];
+        l += (p[i] - c * lt).max(0);
+        rt += t[n - i - 1];
+        r += (p[n - i - 1] - c * rt).max(0);
+    }
+    let ans = if l > r {
+        "Limak"
+    } else if l < r {
+        "Radewoosh"
+    } else {
+        "Tie"
+    };
+    println!("{ans}");
+}
+
+fn main() {
+    solve();
+}
+
+thread_local! {
+    pub static INPUT: std::cell::RefCell<std::str::SplitAsciiWhitespace<'static>> = std::cell::RefCell::<std::str::SplitAsciiWhitespace<'static>>::new({
+        let mut input = String::new();
+        std::io::Read::read_to_string(&mut std::io::stdin(), &mut input).unwrap();
+        Box::leak(input.into_boxed_str()).split_ascii_whitespace()
+    });
+}
+
+pub fn read<T: std::str::FromStr>() -> T
+where
+    T::Err: std::fmt::Debug,
+{
+    INPUT.with(|input| input.borrow_mut().next().unwrap().parse().unwrap())
+}
