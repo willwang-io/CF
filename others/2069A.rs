@@ -1,20 +1,17 @@
-// Created: Aug  3 2026, 19:11:00
+// Created: Aug  3 2026, 22:50:08
 // Formatted with rustfmt.
 
 fn solve() {
     let n: usize = read();
-    let mut a: Vec<(i32, usize)> = (0..n).map(|i| (read(), i)).collect();
-    a.sort_unstable();
-    let mut b = vec![0; n];
-    for (i, &(_, j)) in a.iter().enumerate() {
-        b[j] = n - i;
-    }
-    let ans = b
-        .iter()
-        .map(|x| x.to_string())
+    let a: String = (0..n - 2)
+        .map(|_| read::<String>())
         .collect::<Vec<_>>()
-        .join(" ");
-    println!("{ans}");
+        .join("");
+    if a.contains("101") {
+        println!("NO");
+    } else {
+        println!("YES");
+    }
 }
 
 fn main() {

@@ -1,20 +1,14 @@
-// Created: Aug  3 2026, 19:11:00
+// Created: Aug  3 2026, 19:19:27
 // Formatted with rustfmt.
 
 fn solve() {
     let n: usize = read();
-    let mut a: Vec<(i32, usize)> = (0..n).map(|i| (read(), i)).collect();
-    a.sort_unstable();
-    let mut b = vec![0; n];
-    for (i, &(_, j)) in a.iter().enumerate() {
-        b[j] = n - i;
+    let sum = (0..n).map(|_| read::<i32>()).sum::<i32>();
+    if sum % 4 == 0 {
+        println!("YES");
+    } else {
+        println!("NO");
     }
-    let ans = b
-        .iter()
-        .map(|x| x.to_string())
-        .collect::<Vec<_>>()
-        .join(" ");
-    println!("{ans}");
 }
 
 fn main() {

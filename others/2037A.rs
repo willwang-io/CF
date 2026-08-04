@@ -1,19 +1,14 @@
-// Created: Aug  3 2026, 19:11:00
+// Created: Aug  3 2026, 22:44:23
 // Formatted with rustfmt.
 
 fn solve() {
     let n: usize = read();
-    let mut a: Vec<(i32, usize)> = (0..n).map(|i| (read(), i)).collect();
-    a.sort_unstable();
-    let mut b = vec![0; n];
-    for (i, &(_, j)) in a.iter().enumerate() {
-        b[j] = n - i;
+    let mut cnt = vec![0; 21];
+    for _ in 0..n {
+        let x: usize = read();
+        cnt[x] += 1;
     }
-    let ans = b
-        .iter()
-        .map(|x| x.to_string())
-        .collect::<Vec<_>>()
-        .join(" ");
+    let ans = cnt.iter().map(|&x| x / 2).sum::<i32>();
     println!("{ans}");
 }
 

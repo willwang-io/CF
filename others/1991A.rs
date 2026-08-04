@@ -1,19 +1,15 @@
-// Created: Aug  3 2026, 19:11:00
+// Created: Aug  3 2026, 22:54:30
 // Formatted with rustfmt.
 
 fn solve() {
     let n: usize = read();
-    let mut a: Vec<(i32, usize)> = (0..n).map(|i| (read(), i)).collect();
-    a.sort_unstable();
-    let mut b = vec![0; n];
-    for (i, &(_, j)) in a.iter().enumerate() {
-        b[j] = n - i;
+    let a: Vec<i32> = (0..n).map(|_| read()).collect();
+    let mut ans = 0;
+    for i in 0..n {
+        if i % 2 == 0 && (n - i - 1) % 2 == 0 {
+            ans = ans.max(a[i]);
+        }
     }
-    let ans = b
-        .iter()
-        .map(|x| x.to_string())
-        .collect::<Vec<_>>()
-        .join(" ");
     println!("{ans}");
 }
 
